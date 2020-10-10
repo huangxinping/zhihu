@@ -1,0 +1,4 @@
+git+https://github.com/huangxinping/ZhihuSpider.git
+pdfkit
+fire
+tqdm

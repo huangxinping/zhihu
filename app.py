@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 该脚本为把知乎回答爬虫下来后的HTML合并到单一 HTML 或 PDF 中好打印出来阅读
 知乎回答爬虫：zhihu -u https://www.zhihu.com/question/303896489 -w ~/Desktop
@@ -71,6 +72,7 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
         os.remove(f'{save_dir}/{name}.html')
     with open(f'{save_dir}/{name}.html', 'a+') as w:
         w.writelines(start_section.replace('1234567890', name))
+    need_have_title = True
     for file in tqdm(os.listdir(f'./question/{name}')):
         if not file.endswith('html'):
             continue
@@ -82,7 +84,12 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
             if len(body):
                 with open(f'{save_dir}/{name}.html', 'a+') as w:
                     text = html.tostring(body[0]).decode("utf-8")
+                    if not need_have_title:
+                        tmp = text.split('\n')
+                        tmp = tmp[:2]+tmp[7:]
+                        text = ''.join(tmp)
                     w.writelines(text)
+                    need_have_title = False
     with open(f'{save_dir}/{name}.html', 'a+') as w:
         w.writelines(end_section)
 
