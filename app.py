@@ -1,9 +1,4 @@
 #!/usr/bin/env python
-"""
-该脚本为把知乎回答爬虫下来后的HTML合并到单一 HTML 或 PDF 中好打印出来阅读
-知乎回答爬虫：zhihu -u https://www.zhihu.com/question/303896489 -w ~/Desktop
-"""
-
 import os
 from lxml import etree, html
 import time
@@ -42,27 +37,25 @@ def timer(func):
         t1 = time.time()
         func(*args, **kw)
         t2 = time.time()
-        print(f'Cost: {t2-t1} seconds')
+        print(f'耗时{t2-t1}秒')
     return wrapper
 
 
-@timer
 def to_pdf(path):
-    """
-    path: director or file
-    """
-    if os.path.isdir(path):
-        files = [f'{path}/{file}' for file in os.listdir(path)]
-    else:
-        files = path
-    pdfkit.from_file(files, 'out.pdf') 
+    print('开始转换到PDF...')
+    try:
+        file_name = os.path.basename(path)
+        title = file_name.replace('.html', '')
+        pdfkit.from_file(path, f'{path.replace(file_name, "")}{title}.pdf') 
+    except Exception as e:
+        ...
 
 
 def title():
     return os.listdir('./question')[0]
 
 @timer
-def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')):
+def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), format='html'):
     # Step 1: spider answers
     os.system(f'zhihu -u https://www.zhihu.com/question/{id} -w {os.getcwd()}')
 
@@ -96,6 +89,10 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
     # Step 3: remove temp files
     shutil.rmtree('./question')
 
+    # Step 4: check if need convert to pdf
+    if format == 'pdf':
+        to_pdf(f'{save_dir}/{name}.html')
+        os.remove(f'{save_dir}/{name}.html')
 
 if __name__ == "__main__":
     fire.Fire(main)

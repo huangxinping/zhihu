@@ -1,22 +1,33 @@
-# 爬取知乎问题所有回答合并到单一 HTML 文件中
+# 爬取知乎问题所有回答，并合并为单个 HTML 或 PDF 文件
 
-# 环境
+## 环境
 
 > Python 3.6+    
-> Linux、Unix，不支持 Windows
+> Linux、Unix，不支持 Windows    
+> wkhtmltopdf - 如果需要导出为 PDF 则需要安装 (https://wkhtmltopdf.org/downloads.html)
 
 ## 安装依赖
-> 1. 安装 ZhihuSpider 库     
-    源码下载：git clone https://github.com/huangxinping/ZhihuSpider.git    
-    编译及安装：python setup.py install && pip install .
+
+### A 方案
+
+> pip install -r requirements.txt
+
+### B 方案
+
+> 1. 安装 ZhihuSpider 库    
+    - git clone https://github.com/huangxinping/ZhihuSpider.git    
+    - cd ZhihuSpider    
+    - python setup.py install && pip install .    
 > 2. 安装另外一些第三方库    
-    pip install pdfkit fire tqdm
-> 3. 开始用吧    
-    python app.py --id {question_id} --save_dir {path}    
-    -- save_dir: 默认是桌面
+    pip install fire tqdm pdfkit `如果需要导出为 PDF，则需要安装 pdfkit`
+> 3. 开始玩吧    
+    python app.py --id {question_id} --save_dir {path} --format {format}   
+    -- save_dir: 默认是桌面（Mac OS 测试环境）    
+    -- format: 默认为 html
 
 
 ## 例子
+
 ```
-python app.py --id 345516318
+python app.py --id 345516318 --save_dir ~/Desktop --format pdf
 ```
