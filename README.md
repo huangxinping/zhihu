@@ -20,10 +20,11 @@
     - python setup.py install && pip install .    
 > 2. 安装另外一些第三方库    
     pip install fire tqdm pdfkit `如果需要导出为 PDF，则需要安装 pdfkit`
-> 3. 开始玩吧    
+
+## 玩一玩
     python app.py --id {question_id} --path {path} --format {format}   
-    -- path: 默认是桌面（Mac OS 测试环境）    
-    -- format: 默认为 html
+    -- path: 默认是桌面（测试环境：Mac OS）    
+    -- format: html或pdf，默认为 html
 
 
 ## 例子
