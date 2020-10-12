@@ -21,13 +21,13 @@
 > 2. 安装另外一些第三方库    
     pip install fire tqdm pdfkit `如果需要导出为 PDF，则需要安装 pdfkit`
 > 3. 开始玩吧    
-    python app.py --id {question_id} --save_dir {path} --format {format}   
-    -- save_dir: 默认是桌面（Mac OS 测试环境）    
+    python app.py --id {question_id} --path {path} --format {format}   
+    -- path: 默认是桌面（Mac OS 测试环境）    
     -- format: 默认为 html
 
 
 ## 例子
 
 ```
-python app.py --id 345516318 --save_dir ~/Desktop --format pdf
+python app.py --id 345516318 --path ~/Desktop --format pdf
 ```

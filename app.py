@@ -55,15 +55,15 @@ def title():
     return os.listdir('./question')[0]
 
 @timer
-def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), format='html'):
+def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), format='html'):
     # Step 1: spider answers
     os.system(f'zhihu -u https://www.zhihu.com/question/{id} -w {os.getcwd()}')
 
     # Step 2: merge
     name = title()
-    if os.path.exists(f'{save_dir}/{name}.html'):
-        os.remove(f'{save_dir}/{name}.html')
-    with open(f'{save_dir}/{name}.html', 'a+') as w:
+    if os.path.exists(f'{path}/{name}.html'):
+        os.remove(f'{path}/{name}.html')
+    with open(f'{path}/{name}.html', 'a+') as w:
         w.writelines(start_section.replace('1234567890', name))
     need_have_title = True
     for file in tqdm(os.listdir(f'./question/{name}')):
@@ -75,7 +75,7 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
             selector = etree.HTML(''.join(content), parser=parser)
             body = selector.xpath('//div[@class="article"]')
             if len(body):
-                with open(f'{save_dir}/{name}.html', 'a+') as w:
+                with open(f'{path}/{name}.html', 'a+') as w:
                     text = html.tostring(body[0]).decode("utf-8")
                     if not need_have_title:
                         tmp = text.split('\n')
@@ -83,7 +83,7 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
                         text = ''.join(tmp)
                     w.writelines(text)
                     need_have_title = False
-    with open(f'{save_dir}/{name}.html', 'a+') as w:
+    with open(f'{path}/{name}.html', 'a+') as w:
         w.writelines(end_section)
 
     # Step 3: remove temp files
@@ -91,8 +91,8 @@ def main(id, save_dir=os.path.join(os.path.join(os.path.expanduser('~')), 'Deskt
 
     # Step 4: check if need convert to pdf
     if format == 'pdf':
-        to_pdf(f'{save_dir}/{name}.html')
-        os.remove(f'{save_dir}/{name}.html')
+        to_pdf(f'{path}/{name}.html')
+        os.remove(f'{path}/{name}.html')
 
 if __name__ == "__main__":
     fire.Fire(main)
