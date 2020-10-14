@@ -73,16 +73,19 @@ def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
             content = f.readlines()
             parser = etree.HTMLParser(encoding="utf-8")
             selector = etree.HTML(''.join(content), parser=parser)
-            body = selector.xpath('//div[@class="article"]')
-            if len(body):
-                with open(f'{path}/{name}.html', 'a+') as w:
-                    text = html.tostring(body[0]).decode("utf-8")
-                    if not need_have_title:
-                        tmp = text.split('\n')
-                        tmp = tmp[:2]+tmp[7:]
-                        text = ''.join(tmp)
-                    w.writelines(text)
-                    need_have_title = False
+            try:
+                body = selector.xpath('//div[@class="article"]')
+                if len(body):
+                    with open(f'{path}/{name}.html', 'a+') as w:
+                        text = html.tostring(body[0]).decode("utf-8")
+                        if not need_have_title:
+                            tmp = text.split('\n')
+                            tmp = tmp[:2]+tmp[7:]
+                            text = ''.join(tmp)
+                        w.writelines(text)
+                        need_have_title = False
+            except Exception as e:
+                ...
     with open(f'{path}/{name}.html', 'a+') as w:
         w.writelines(end_section)
 
