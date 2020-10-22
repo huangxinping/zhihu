@@ -25,10 +25,11 @@
     python app.py --id {question_id} --path {path} --format {format}   
     -- path: 默认是桌面（测试环境：Mac OS）    
     -- format: html或pdf，默认为 html
+    -- threshold：阈值，低于该阈值的点赞数回答则过滤，默认为 10
 
 
 ## 例子
 
 ```
-python app.py --id 345516318 --path ~/Desktop --format pdf
+python app.py --id 345516318 --path ~/Desktop --format pdf --threshold 100
 ```
