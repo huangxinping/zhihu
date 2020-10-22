@@ -60,7 +60,7 @@ def agree_numbers(elem):
 
 
 @timer
-def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), format='html'):
+def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop'), format='html', threshold=10):
     # Step 1: spider answers
     os.system(f'zhihu -u https://www.zhihu.com/question/{id} -w {os.getcwd()}')
 
@@ -71,7 +71,9 @@ def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
     with open(f'{path}/{name}.html', 'a+') as w:
         w.writelines(start_section.replace('1234567890', name))
     need_have_title = True
-    for file in tqdm(sorted(os.listdir(f'./question/{name}'), key=agree_numbers, reverse=True)):
+    for file in tqdm(sorted(
+            [file_name for file_name in os.listdir(f'./question/{name}') if int(file_name.split('-')[1]) > threshold],
+            key=agree_numbers, reverse=True)):
         if not file.endswith('html'):
             continue
         with open(f'./question/{name}/{file}') as f:
