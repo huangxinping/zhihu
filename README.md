@@ -8,9 +8,13 @@
 
 ## 安装
 
-> git clone https://github.com/huangxinping/zhihu.git    
-> cd zhihu   
-> python setup.py sdist && cd dist && tar xzf zhihuer-0.0.1.tar.gz && cd zhihuer-0.0.1 && python setup.py install  
+> 1. git clone https://github.com/huangxinping/zhihu.git    
+> 2. cd zhihu   
+> 3. python setup.py sdist    
+> 4. cd dist    
+> 5. tar xzf zhihuer-0.0.1.tar.gz    
+> 6. cd zhihuer-0.0.1    
+> 7. python setup.py install  
 
 ## 使用
 
