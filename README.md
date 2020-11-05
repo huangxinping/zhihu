@@ -25,6 +25,8 @@
 
 ## 例子
 
+##### 假设需要爬取：https://www.zhihu.com/question/345516318 和 https://www.zhihu.com/question/339771266
+
 ```
 zhihuer --id 345516318,339771266 --destination ~/Desktop --format pdf --threshold 100
 ```
