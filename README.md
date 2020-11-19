@@ -26,3 +26,7 @@
 ```
 zhihuer --id 345516318,339771266 --destination ~/Desktop --format pdf --threshold 100
 ```
+
+##### 爬取(https://www.zhihu.com/question/345516318)结果部分截图展示
+
+![研究生们刚开始看英文文献是怎么看的？](docs/1.png)
