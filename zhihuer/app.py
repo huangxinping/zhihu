@@ -4,6 +4,7 @@ from lxml import etree, html
 import time
 import pdfkit
 import fire
+import re
 import shutil
 from tqdm import tqdm
 
@@ -87,11 +88,16 @@ def main(id, path=os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
                         text = html.tostring(body[0]).decode("utf-8")
                         if not need_have_title:
                             tmp = text.split('\n')
+                            answer_link = re.search(r'https://.+/\w{1,}', tmp[3])[0]
                             tmp = tmp[:2] + tmp[7:]
+                            tmp[2] = re.sub(r'https://.+\"', answer_link+'"', tmp[2])
                             tmp[10] = f'{tmp[10]}-{file.split("-")[1]}点赞'
                             text = ''.join(tmp)
                         else:
                             tmp = text.split('\n')
+                            answer_link = re.search(r'https://.+/\w{1,}', tmp[3])[0]
+                            tmp[3] = re.sub(r'/answer/\w{1,}', '', tmp[3])
+                            tmp[7] = re.sub(r'https://.+\"', answer_link+'"', tmp[7])
                             tmp[15] = f'{tmp[15]}-{file.split("-")[1]}点赞'
                             text = ''.join(tmp)
                         w.writelines(text)
